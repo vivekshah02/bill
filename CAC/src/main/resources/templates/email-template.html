@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+        h1 {
+            color: #27ae60;
+            font-size: 24px;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+        .footer {
+            text-align: center;
+            font-size: 14px;
+            color: #aaa;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Updated heading -->
+        <h1>Care and Cure Hospital</h1>
+        <p style="text-align: center; color: #555; font-size: 16px;">Your Bill Details</p>
+        <table>
+		<!--	<th>Bill ID</th>
+			                   <th>Bill Date</th>
+			                   <th>Consultation Fees</th>
+			                   <th>Medicine Fees</th>
+			                   <th>Test Charges</th>
+			                   <th>Miscellaneous Charge</th>
+			                   <th>Description</th>
+			                   <th>Insurance Applicable</th>
+			                   <th>Discount (%)</th>
+			                   <th>Tax</th>
+			                   <th>Total Amount</th>
+			                   <th>Final Amount</th>
+			                   <th>Payment Status</th>
+			                   <th>Appointment ID</th>
+			                   <th>Reason</th>
+			                   <th>Patient ID</th>
+			                   <th>Doctor ID</th>
+			                   <th>Appointment Date</th>
+			                   <th>Appointment Time</th>
+			                   <th>Status</th>
+							   <td th:text="${bill.billId}"></td>
+							                      <td th:text="${bill.billDate}"></td>
+							                      <td th:text="${bill.consultationFees}"></td>
+							                      <td th:text="${bill.medicineFees}"></td>
+							                      <td th:text="${bill.testCharges}"></td>
+							                      <td th:text="${bill.miscellaneousCharge}"></td>
+							                      <td th:text="${bill.description}"></td>
+							                      <td th:text="${bill.isInsuranceApplicable} ? 'Yes' : 'No'"></td>
+							                      <td th:text="${bill.discountPercentage}"></td>
+							                      <td th:text="${bill.tax} ? 'Yes' : 'No'"></td>
+							                      <td th:text="${bill.totalamount}"></td>
+							                      <td th:text="${bill.finalamount}"></td>
+							                      <td th:text="${bill.paymentstatus}"></td>
+							                      <td th:text="${bill.appointment.appointmentId}"></td>
+							                      <td th:text="${bill.appointment.reason}"></td>
+							                      <td th:text="${bill.appointment.patientId}"></td>
+							                      <td th:text="${bill.appointment.doctorId}"></td>
+							                      <td th:text="${bill.appointment.appointmentDate}"></td>
+							                      <td th:text="${bill.appointment.appointmentTime}"></td>
+							                      <td th:text="${bill.appointment.status}"></td>-->
+            <tr>
+                <td>Bill ID:</td>
+                <td th:text="${bill.billId}"></td>
+            </tr>
+			<tr>
+			               <td>Appointment ID</td>
+			               <td th:text="${bill.appointment.appointmentId}"></td>
+			 </tr>
+			 <tr>
+			                <td>Patient ID</td>
+			                <td th:text="${bill.appointment.patientId}"></td>
+			  </tr>
+			  <tr>
+			  		                <td>Doctor ID</td>
+			  		                <td th:text="${bill.appointment.doctorId}"></td>
+			  		  </tr>
+            <tr>
+				
+                <td>Bill Date:</td>
+                <td th:text="${bill.billDate}"></td>
+            </tr>
+            <tr>
+                <td>Consultation Fees:</td>
+                <td th:text="${bill.consultationFees}"></td>
+            </tr>
+			<tr>
+			                <td>Test Charges</td>
+			                <td th:text="${bill.testCharges}"></td>
+			 </tr>
+			 <tr>
+			                 <td>Miscellaneous Charge</td>
+			                 <td th:text="${bill.miscellaneousCharge}"></td>
+			  </tr>
+			  
+            <tr>
+                <td>Medicine Fees:</td>
+                <td th:text="${bill.medicineFees}"></td>
+            </tr>
+            <tr>
+                <td>Total Amount:</td>
+                <td th:text="${bill.totalamount}"></td>
+            </tr>
+			<tr>
+			                <td>Discount (%)</td>
+			                <td th:text="${bill.discountPercentage}"></td>
+			            </tr>
+            <tr>
+                <td>Final Amount:</td>
+                <td th:text="${bill.finalamount}"></td>
+            </tr>
+        </table>
+        <div class="footer">
+            <p>Thank you for choosing our services.</p>
+        </div>
+    </div>
+</body>
+</html>

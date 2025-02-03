@@ -1,0 +1,49 @@
+<html>
+<head>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+    <h3>Bill ID: <span id="billId" th:value="${billId}"></span></h3>
+	<input type="text" class="form-control" th:value="${billId}" id="billId" name="bill.billId" >
+    <h3>Amount: ₹<span id="amount" th:value="${finalamount}"></span></h3>
+
+    <button id="rzp-button">Pay Now</button>
+
+    <script>
+        var billId = document.getElementById("billId").innerText;
+        var amount = document.getElementById("amount").innerText * 100; // Convert to paise
+
+        var options = {
+            "key": "rzp_test_73Og2QB6bRrFB9",
+            "amount": amount,
+            "currency": "INR",
+            "name": "Bill Payment",
+            "description": "Pay your bill",
+            "handler": function (response) {
+                // Send Payment details to Backend
+                fetch("http://localhost:8080/api/payments/create", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        billId: billId,
+                        razorpayPaymentId: response.razorpay_payment_id,
+                        amountPaid: amount / 100 // Convert back to rupees
+                    })
+                })
+                .then(res => res.text())
+                .then(data => {
+                    alert("Payment saved successfully!");
+                    window.location.href = "/";
+                })
+                .catch(err => console.error("Error:", err));
+            }
+        };
+
+        var rzp = new Razorpay(options);
+        document.getElementById('rzp-button').onclick = function(e) {
+            rzp.open();
+            e.preventDefault();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Razorpay Payment</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+    <h1>Razorpay Payment Integration</h1>
+    <button id="payButton">Pay Now</button>
+
+    <script>
+        document.getElementById('payButton').onclick = function() {
+            // Make a POST request to create an order
+            fetch('/payment/create-order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(500)  // Amount in INR (500 INR)
+            })
+            .then(response => response.json())
+            .then(order => {
+                var options = {
+                    "key": "rzp_test_73Og2QB6bRrFB9", // Your Razorpay key
+                    "amount": order.amount, // Amount in paise
+                    "currency": "INR",
+                    "name": "Your Company",
+                    "description": "Payment for Order",
+                    "order_id": order.id, // Order ID returned from backend
+                    "handler": function (response) {
+                        // Call backend to verify payment
+                        fetch('/payment/verify?paymentId=' + response.razorpay_payment_id + '&orderId=' + response.razorpay_order_id + '&signature=' + response.razorpay_signature)
+                        .then(response => response.text())
+                        .then(message => alert(message));
+                    },
+                    "prefill": {
+                        "name": "John Doe",
+                        "email": "john@example.com"
+                    }
+                };
+
+                var rzp1 = new Razorpay(options);
+                rzp1.open();
+            })
+            .catch(error => {
+                console.log('Error creating order:', error);
+            });
+        };
+    </script>
+</body>
+</html>

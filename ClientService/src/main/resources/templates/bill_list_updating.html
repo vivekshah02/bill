@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill Management</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Roboto", Arial, sans-serif;
+            background: url('https://images.unsplash.com/photo-1573164574396-11c5e6f7e5cc?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+            backdrop-filter: blur(4px);
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.15);
+            width: 700px;
+            box-sizing: border-box;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        h1, h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: "Montserrat", sans-serif;
+        }
+
+        h1 {
+            color: #34495e;
+            font-size: 34px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            color: #27ae60;
+            font-size: 20px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+
+        .row label {
+            font-size: 15px;
+            font-weight: 500;
+            flex: 1;
+        }
+
+        .row input,
+        .row select {
+            flex: 2;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 14px;
+            color: #fff;
+            background-color: #27ae60;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218c53;
+        }
+    </style>
+  
+</head>
+<body>
+    <div class="container">
+        <h1>Bill Management</h1>
+
+        <h3>Update Payment Status </h3>
+   <!--    <form th:action="@{/bills/{appointmentId}(appointmentId=${Appointment.appointmentId})}" th:object="${bill}" method="post">
+		<form th:action="@{/bills/}" th:object="${bill}" method="post">    "-->
+		
+			<form th:action="@{/updatepaymentstatus}" id="dynamicForm" th:object="${bill}" method="post">
+				               
+            <div class="row">
+                <label for="billId">Bill ID:</label>
+                <input type="number" name="billId" th:value="${bill.billId}" placeholder="Enter Bill ID" readonly>  
+
+                <label for="appointmentId">Appointment ID:</label>
+                <input type="number" id="appId" th:value="${bill.appointment.appointmentId}"   name="appointment.appointmentId" placeholder="Enter Appointment ID" readonly >
+				<!--<input type="number" id="appId" th:value="${bill.appointment.appointmentId}" name="appointment.appointmentId" placeholder="Enter Appointment ID" readonly>
+-->
+				</div>
+
+            <div class="row">
+                <label for="billDate">Bill Date:</label>
+                <input type="date" th:value="${bill.billDate}" name="billDate" readonly>
+
+                <label for="consultationFees">Consultation Fees:</label>
+                <input type="number" th:value="${bill.consultationFees}" name="consultationFees" placeholder="Enter Consultation Fees" readonly>
+            </div>
+            <div class="row">
+                <label for="medicineFees">Medicine Fees:</label>
+                <input type="number" th:value="${bill.medicineFees}" name="medicineFees" placeholder="Enter Medicine Fees" readonly>
+
+                <label for="testCharges">Test Charges:</label>
+                <input type="number" th:value="${bill.testCharges}" name="testCharges" placeholder="Enter Test Charges" readonly>
+            </div>
+
+            <div class="row">
+                <label for="miscCharges">Miscellaneous Charges:</label>
+                <input type="number" th:value="${bill.miscellaneousCharge}" name="miscellaneousCharge" placeholder="Enter Miscellaneous Charges" readonly>
+
+                <label for="isInsuranceApplicable">Is Insurance Applicable:</label>
+                 <input  th:value="${bill.isInsuranceApplicable}" name="isInsuranceApplicable" placeholder="Enter Discount %" step="0.01" readonly>
+                
+             <!--   <select name="isInsuranceApplicable" th:value="${bill.isInsuranceApplicable}" readonly>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>-->
+            </div>
+
+            <div class="row">
+                <label for="discountPercentage">Discount Percentage:</label>
+                <input type="number" th:value="${bill.discountPercentage}" name="discountPercentage" placeholder="Enter Discount %" step="0.01" readonly>
+
+				<!--
+                <label for="tax">Tax:</label>
+                 <input  th:value="${bill.tax}" name="tax" placeholder="Enter Discount %" step="0.01" readonly>
+                
+                <select th:value="${tax}" name="tax" readonly>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>-->
+            </div>
+
+            <div class="row">
+                <label for="description">Description:</label>
+                <input type="text" th:value="${bill.description}" name="description" placeholder="Enter Description" readonly>
+
+                <label for="paymentStatus">Payment Status:</label>
+                <select th:value="${bill.paymentstatus}" name="paymentstatus" required>
+                    <option value="paid">Paid</option>
+                    <option value="unpaid">Unpaid</option>
+                    <option value="partially_paid">Partially Paid</option>
+                </select>
+            </div>
+
+            <div class="row">
+                <label for="totalAmount">Total Amount:</label>
+                <input type="number"th:value="${bill.totalamount}" name="totalamount" placeholder="Enter Total Amount" readonly>
+
+                <label for="finalAmount">Final Amount:</label>
+                <input type="number" th:value="${bill.finalamount}"  name="finalamount" placeholder="Enter Final Amount" readonly>
+            </div>
+
+            <div class="button-row">
+              <button type="submit" value="submit" >Update Bill</button>
+            </div>
+        </form>
+		
+      
+    </div>
+</body>
+</html>
